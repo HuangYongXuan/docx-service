@@ -11,9 +11,10 @@
         "php": "^7.2",
         "barryvdh/laravel-ide-helper": "^2.6",
         "fideloper/proxy": "^4.0",
-        "laravel/framework": "6.11.0",
+        "halpdesk/zizaco-entrust-laravel-6.0": "^1.9",
+        "laravel/framework": "^6.0.0",
         "laravel/tinker": "^2.0",
-        "zizaco/entrust": "^1.9"
+        "tymon/jwt-auth": "1.0.0-rc.5.1"
     },
     "require-dev": {
         "facade/ignition": "^1.4",
