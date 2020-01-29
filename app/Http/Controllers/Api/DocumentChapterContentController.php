@@ -9,6 +9,22 @@ use Illuminate\Http\Request;
 class DocumentChapterContentController extends Controller
 {
     /**
+     * 通过document_chapter_id获取内容
+     * @param Request $request
+     * @return array
+     */
+    public function index(Request $request)
+    {
+        $this->makeValidator([
+            'document_chapter_id' => 'required|integer|exists:document_chapters,id',
+        ]);
+        $id = $request->get('document_chapter_id');
+
+        return toSuccess(200, DocumentChapterContent::where('document_chapter_id', $id)->get());
+
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param Request $request
@@ -24,6 +40,7 @@ class DocumentChapterContentController extends Controller
         $this->makeValidator($rules);
 
         $data = $request->only(array_keys($rules));
+        $data['contents'] = json_encode($data['contents']);
 
         $documentChapterContent = DocumentChapterContent::create($data);
 
@@ -60,6 +77,10 @@ class DocumentChapterContentController extends Controller
         if (empty($data)) {
             return toError(404, [], '没事数据会被更新');
         }
+        if ($request->has('contents')) {
+            $data['contents'] = json_encode($data['contents']);
+        }
+
         if ($documentChapterContent->update($data)) {
             return toSuccess(200, $documentChapterContent, '更新成功');
         }
