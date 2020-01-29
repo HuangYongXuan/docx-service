@@ -7,4 +7,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('destroy', 'Api\ApiAuthController@destroy')->middleware(['api-auth']);
 });
 
-Route::resource('documents', 'Api\DocumentController')->middleware('api-auth');
+Route::apiResources([
+    'documents' => 'Api\DocumentController',
+    'documentChapter' => 'Api\DocumentChapterController',
+], ['middleware' => 'api-auth']);

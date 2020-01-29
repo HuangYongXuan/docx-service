@@ -30,5 +30,10 @@ use Illuminate\Database\Eloquent\Model;
  */
 class DocumentChapter extends Model
 {
-    //
+    protected $fillable = [
+        'documents_id',
+        'parent_id',
+        'name',
+        'is_enable',
+    ];
 }
