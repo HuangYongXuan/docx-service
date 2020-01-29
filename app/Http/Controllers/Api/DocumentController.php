@@ -27,9 +27,7 @@ class DocumentController extends Controller
             $query->where('name', 'like', '%' . \request()->get('name') . '%');
         }
 
-        $result = $query->paginate(request()->get('page', 1), request()->get('size', 1));
-
-        return toSuccess(200, $result);
+        return responsePagination($query);
     }
 
     /**
@@ -59,7 +57,7 @@ class DocumentController extends Controller
         $this->makeValidator($rules);
 
         $data = $request->only(array_keys($rules));
-
+        $data['crested_users_id'] = \Auth::user()->id;
         $result = Document::create($data);
 
         if ($rules) {

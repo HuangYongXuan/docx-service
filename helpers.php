@@ -1,4 +1,8 @@
 <?php
+
+
+use Illuminate\Database\Eloquent\Builder;
+
 if (function_exists('toSuccess') === false) {
     /**
      * http返回成功结果
@@ -34,5 +38,19 @@ if (function_exists('toError') === false) {
             'data' => $data,
             'msg' => $msg
         ];
+    }
+}
+
+
+if (function_exists('responsePagination') === false) {
+
+    /**
+     * @param Builder $builder
+     * @param string $msg
+     * @return array
+     */
+    function responsePagination($builder, $msg = '')
+    {
+        return toSuccess(200, $builder->paginate(request('size', 25), request('keys', ['*'])), $msg);
     }
 }

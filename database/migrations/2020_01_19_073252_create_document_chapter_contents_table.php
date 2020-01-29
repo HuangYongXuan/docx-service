@@ -17,6 +17,7 @@ class CreateDocumentChapterContentsTable extends Migration
             $table->bigInteger('document_chapter_id');
             $table->jsonb('contents')->default('[]');
             $table->timestamps();
+            $table->foreign('document_chapter_id')->references('id')->on('document_chapters')->onDelete('cascade');
         });
     }
 
