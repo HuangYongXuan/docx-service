@@ -43,13 +43,13 @@ class DocumentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @return array
      */
     public function store(Request $request)
     {
         $rules = [
-            'name' => 'required|min:2|max:64',
+            'name' => 'required|min:2|max:64|unique:documents,name',
             'is_enable' => 'nullable|boolean',
             'is_auth' => 'nullable|boolean',
         ];
@@ -70,45 +70,54 @@ class DocumentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\Document $document
-     * @return \Illuminate\Http\Response
+     * @param Document $document
+     * @return array
      */
     public function show(Document $document)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param \App\Models\Document $document
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Document $document)
-    {
-        //
+        return toSuccess(200, $document);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Document $document
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Document $document
+     * @return array
      */
     public function update(Request $request, Document $document)
     {
-        //
+        if ($document->crested_users_id !== \Auth::id()) {
+            return toError(-404, [], '无法找到数据');
+        }
+
+        $rules = [
+            'name' => 'nullable|string|max:64|min:2|unique:documents,name',
+            'is_enabled' => 'nullable|boolean',
+            'is_auth' => 'nullable|boolean',
+        ];
+        $this->makeValidator($rules);
+
+        $data = $request->only(array_keys($rules));
+
+        if ($document->update($data)) {
+            return toSuccess(200, $document, '更新成功');
+        }
+        return toError(500, [], '更新失败');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Document $document
-     * @return \Illuminate\Http\Response
+     * @param Document $document
+     * @return array
      */
     public function destroy(Document $document)
     {
-        //
+        if (Document::destroy($document->id)) {
+            return toSuccess(200, [], '删除成功');
+        }
+
+        return toError(500, [], '删除失败');
     }
 }
