@@ -21,8 +21,14 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\DocumentChapterContent whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\DocumentChapterContent whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string $title
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\DocumentChapterContent whereTitle($value)
  */
 class DocumentChapterContent extends Model
 {
-    //
+    protected $fillable = [
+        'document_chapter_id',
+        'contents',
+        'title',
+    ];
 }

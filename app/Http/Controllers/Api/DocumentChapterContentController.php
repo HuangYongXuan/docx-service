@@ -9,78 +9,60 @@ use Illuminate\Http\Request;
 class DocumentChapterContentController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return array
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'document_chapter_id' => 'required|integer|exists:document_chapters,id',
+            'contents' => 'required|array',
+            'title' => 'required|string|max:255',
+        ];
+        $this->makeValidator($rules);
+
+        $data = $request->only(array_keys($rules));
+
+        $documentChapterContent = DocumentChapterContent::create($data);
+
+        return toSuccess(200, $documentChapterContent, '创建成功');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\DocumentChapterContent  $documentChapterContent
-     * @return \Illuminate\Http\Response
+     * @param DocumentChapterContent $documentChapterContent
+     * @return array
      */
     public function show(DocumentChapterContent $documentChapterContent)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\DocumentChapterContent  $documentChapterContent
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(DocumentChapterContent $documentChapterContent)
-    {
-        //
+        return toSuccess(200, $documentChapterContent);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\DocumentChapterContent  $documentChapterContent
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param DocumentChapterContent $documentChapterContent
+     * @return array
      */
     public function update(Request $request, DocumentChapterContent $documentChapterContent)
     {
-        //
-    }
+        $rules = [
+            'contents' => 'nullable|array',
+            'title' => 'nullable|string|max:255',
+        ];
+        $this->makeValidator($rules);
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\DocumentChapterContent  $documentChapterContent
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(DocumentChapterContent $documentChapterContent)
-    {
-        //
+        $data = $request->only(array_keys($rules));
+        if (empty($data)) {
+            return toError(404, [], '没事数据会被更新');
+        }
+        if ($documentChapterContent->update($data)) {
+            return toSuccess(200, $documentChapterContent, '更新成功');
+        }
+        return toError(500, [], '更新失败');
     }
 }

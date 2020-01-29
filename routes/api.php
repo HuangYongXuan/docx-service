@@ -10,4 +10,5 @@ Route::group(['prefix' => 'auth'], function () {
 Route::apiResources([
     'documents' => 'Api\DocumentController',
     'documentChapter' => 'Api\DocumentChapterController',
+    'documentChapterContent' => 'Api\DocumentChapterContentController'
 ], ['middleware' => 'api-auth']);
