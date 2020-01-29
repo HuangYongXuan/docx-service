@@ -11,4 +11,4 @@ Route::apiResources([
     'documents' => 'Api\DocumentController',
     'documentChapter' => 'Api\DocumentChapterController',
     'documentChapterContent' => 'Api\DocumentChapterContentController'
-], ['middleware' => 'api-auth']);
+], ['middleware' => ['api-auth', 'permission:admin-web']]);

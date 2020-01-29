@@ -28,11 +28,7 @@ class RoleAndPermissionSeeder extends Seeder
                 Permission::create(['name' => 'administrator', 'description' => '超级管理员', 'display_name' => '拥有超级管理权限']),
                 Permission::create(['name' => 'admin-web', 'description' => '管理面板', 'display_name' => 'web 管理面板']),
                 Permission::create(['name' => 'admin-role', 'description' => '管理角色', 'display_name' => '管理角色']),
-                Permission::create(['name' => 'admin-permission', 'description' => '管理角色许可', 'display_name' => '管理角色许可']),
                 Permission::create(['name' => 'admin-user', 'description' => '用户管理', 'display_name' => '用户管理']),
-                Permission::create(['name' => 'admin-menu', 'description' => '网站菜单设置', 'display_name' => '网站菜单设置']),
-                Permission::create(['name' => 'admin-setting', 'description' => '网站设置', 'display_name' => '网站设置']),
-                Permission::create(['name' => 'file-manager', 'description' => '文件管理', 'display_name' => '文件管理']),
                 Permission::create(['name' => 'can-login', 'description' => '可以登录', 'display_name' => '可以登录'])
             ]);
         }
