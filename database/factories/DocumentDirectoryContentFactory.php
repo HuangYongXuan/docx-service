@@ -2,10 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Models\DocumentChapter;
+use App\Models\Documents\DocumentDirectoryContent;
 use Faker\Generator as Faker;
 
-$factory->define(DocumentChapter::class, function (Faker $faker) {
+$factory->define(DocumentDirectoryContent::class, function (Faker $faker) {
     return [
         //
     ];

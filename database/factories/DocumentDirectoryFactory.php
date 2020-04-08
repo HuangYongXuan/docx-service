@@ -2,10 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Models\Document;
+use App\Models\Documents\DocumentDirectory;
 use Faker\Generator as Faker;
 
-$factory->define(Document::class, function (Faker $faker) {
+$factory->define(DocumentDirectory::class, function (Faker $faker) {
     return [
         //
     ];
